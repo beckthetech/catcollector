@@ -13,6 +13,12 @@ class CatCreate(CreateView):
   model = Cat
   fields = ['name', 'breed', 'description', 'age']
 
+  def form_valid(self, form):
+    # Assign the logged in user to the cat being created
+    form.instance.user = self.request.user
+    # Let CreateView's form_valid method do its thing
+    return super().form_valid(form)
+
 class CatUpdate(UpdateView):
   model = Cat
   fields = ['breed', 'description', 'age']
